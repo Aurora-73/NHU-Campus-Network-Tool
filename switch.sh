@@ -15,7 +15,6 @@ LOOP_SLEEP=5       # 一轮失败后等待秒数
 cnt_dl=0
 cnt_dx=0
 
-# 小函数：打印你想要的两行简洁日志
 log_try() {
     cur="$1"    # 当前判断到的“当前登录方式”依据 (dl 或 dx)
     try="$2"    # 本轮实际尝试的脚本 (dl 或 dx)
@@ -44,10 +43,8 @@ while :; do
         chosen_script="$DX_SCRIPT"
     fi
 
-    # 简洁日志
     log_try "$current" "$chosen"
 
-    # 清理老信号，避免误判
     [ -f "$DL_SIGNAL" ] && rm -f "$DL_SIGNAL" 2>/dev/null
     [ -f "$DX_SIGNAL" ] && rm -f "$DX_SIGNAL" 2>/dev/null
 
