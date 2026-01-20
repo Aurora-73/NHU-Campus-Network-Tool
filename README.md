@@ -31,19 +31,6 @@
 
 ---
 
-## 功能概览
-
-✔ 支持校园网内网登录
-✔ 支持电信宽带出口认证
-✔ 支持一键断开当前连接
-✔ 支持自动切换登录方式
-✔ 多重 IP 获取回退机制（ip / ifconfig / 全局兜底）
-✔ 自动 URL 编码（兼容 jq / python3）
-✔ 可结合 crontab / systemd 定时运行
-✔ 完整日志记录
-
----
-
 ## 使用说明
 
 ### 配置账号信息
@@ -58,7 +45,7 @@ SERVERCHAN_KEY=""
 
 说明：
 
-* `RAW_USER_ACCOUNT`：原始账号（不需要 URL 编码）
+* `RAW_USER_ACCOUNT`：原始账号，即学号
 * `USER_PASSWORD`：密码明文
 * `SERVERCHAN_KEY`：Server酱通知 key（可留空）
 
@@ -102,13 +89,6 @@ SERVERCHAN_KEY=""
 log.log
 ```
 
-日志内容包括：
-
-* 时间戳
-* 当前 IP
-* 接口返回结果
-* 错误信息（如有）
-
 ---
 
 ##  依赖说明
@@ -121,8 +101,7 @@ log.log
 
   * `curl`
   * `ip` 或 `ifconfig`
-  * `jq`（可选，用于 URL 编码）
-  * `python3`（jq 不存在时作为备用）
+  * `jq`（可选，用于Sever酱编码）
 
 ---
 
@@ -150,7 +129,7 @@ log.log
 2. 在脚本配置区填写：
 
 ```sh
-SERVERCHAN_KEY="你的Server酱Key"
+SERVERCHAN_KEY="你的Key"
 ```
 
 示例：
@@ -180,22 +159,6 @@ IP: 10.123.45.67
 错误信息: 用户名或密码错误
 时间: 2026-01-20 16:40:12
 ```
-
----
-
-### 四、技术实现说明（给程序员看的）
-
-脚本内部通过调用 Server酱 API 实现推送：
-
-```sh
-curl -s "https://sctapi.ftqq.com/${SERVERCHAN_KEY}.send?title=${TITLE}&desp=${DESP}"
-```
-
-其中：
-
-* `TITLE`：URL 编码后的标题
-* `DESP`：URL 编码后的正文
-* 使用 `jq` 或 `python3` 自动处理 URL 编码，避免中文乱码
 
 ---
 
